@@ -1,0 +1,27 @@
+<!-- news/news_list.html -->
+<h1>Новости</h1>
+<a href="{% url 'news_create' %}">Добавить новость</a> |
+<a href="{% url 'article_create' %}">Добавить статью</a> |
+<a href="{% url 'news_search' %}">Поиск</a>
+
+<ul>
+{% for post in news_list %}
+    <li>
+        <a href="{% url 'news_detail' post.pk %}">{{ post.title }}</a> ({{ post.created_at }})
+        <a href="{% url 'post_edit' post.pk %}">Редактировать</a>
+        <a href="{% url 'post_delete' post.pk %}">Удалить</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% if is_paginated %}
+  <div>
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">Предыдущая</a>
+    {% endif %}
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">Следующая</a>
+    {% endif %}
+  </div>
+{% endif %}

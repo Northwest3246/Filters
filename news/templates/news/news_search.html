@@ -1,0 +1,27 @@
+<!-- news/news_search.html -->
+<h1>Поиск новостей</h1>
+<form method="get">
+    {{ filter.form.as_p }}
+    <button type="submit">Искать</button>
+</form>
+
+<ul>
+{% for post in object_list %}
+    <li>
+        <a href="{% url 'news_detail' post.pk %}">{{ post.title }}</a> ({{ post.created_at }})
+    </li>
+{% endfor %}
+</ul>
+
+<!-- Пагинация -->
+{% if is_paginated %}
+  <div>
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{{ request.GET.urlencode|slice:'&' }}">Предыдущая</a>
+    {% endif %}
+    <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{{ request.GET.urlencode|slice:'&' }}">Следующая</a>
+    {% endif %}
+  </div>
+{% endif %}

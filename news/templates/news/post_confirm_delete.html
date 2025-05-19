@@ -1,0 +1,7 @@
+<!-- news/post_confirm_delete.html -->
+<h1>Удалить пост: {{ object.title }}?</h1>
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Да, удалить</button>
+  <a href="{% url 'news_list' %}">Отмена</a>
+</form>
